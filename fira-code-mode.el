@@ -191,7 +191,7 @@ instead."
 (defvaralias 'fira-code-mode--setup 'fira-code-mode-set-font)
 
 ;;;###autoload
-(defun fira-code-mode-install-fonts (&optional pfx)
+(defun fira-code-mode-install-fonts (&optional pfx &optional force)
   "Helper function to download and install the latests fonts based on OS.
 When PFX is non-nil, ignore the prompt and just install"
   (interactive "P")
@@ -209,7 +209,8 @@ When PFX is non-nil, ignore the prompt and just install"
            (known-dest? (stringp font-dest))
            (font-dest (or font-dest (read-directory-name "Font installation directory: " "~/"))))
       (unless (file-directory-p font-dest) (mkdir font-dest t))
-      (url-copy-file font-url (expand-file-name (file-name-nondirectory font-url) font-dest) t)
+      (unless (or (file-exists-p (concat font-dest "FiraCode-Regular-Symbol.otf")) force)
+        (url-copy-file font-url (expand-file-name (file-name-nondirectory font-url) font-dest) t))
       (when known-dest?
         (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
         (shell-command-to-string (format "fc-cache -f -v")))
