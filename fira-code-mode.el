@@ -193,7 +193,8 @@ instead."
 ;;;###autoload
 (defun fira-code-mode-install-fonts (&optional pfx &optional force)
   "Helper function to download and install the latests fonts based on OS.
-When PFX is non-nil, ignore the prompt and just install"
+When PFX is non-nil, ignore the prompt and just install.
+When FORCE is non-nil, install font even if already installed."
   (interactive "P")
   (when (or pfx (yes-or-no-p "This will download and install fonts, are you sure you want to do this?"))
     (let* ((font-url "https://raw.githubusercontent.com/jming422/fira-code-mode/master/fonts/FiraCode-Regular-Symbol.otf")
