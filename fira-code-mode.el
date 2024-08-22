@@ -191,7 +191,7 @@ instead."
 (defvaralias 'fira-code-mode--setup 'fira-code-mode-set-font)
 
 ;;;###autoload
-(defun fira-code-mode-install-fonts (&optional pfx &optional force)
+(defun fira-code-mode-install-fonts (&optional pfx force)
   "Helper function to download and install the latests fonts based on OS.
 When PFX is non-nil, ignore the prompt and just install.
 When FORCE is non-nil, install font even if already installed."
