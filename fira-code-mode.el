@@ -207,17 +207,14 @@ When FORCE is non-nil, install font even if already installed."
                        ;; Default MacOS install directory
                        ((eq system-type 'darwin)
                         (concat (getenv "HOME") "/Library/Fonts/"))))
-           (known-dest? (stringp font-dest))
            (font-dest (or font-dest (read-directory-name "Font installation directory: " "~/"))))
       (unless (file-directory-p font-dest) (mkdir font-dest t))
-      (unless (or (file-exists-p (concat font-dest "FiraCode-Regular-Symbol.otf")) force)
-        (url-copy-file font-url (expand-file-name (file-name-nondirectory font-url) font-dest) t))
-      (when known-dest?
-        (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
-        (shell-command-to-string (format "fc-cache -f -v")))
-      (message "Successfully %s `fira-code-mode' fonts to `%s'!"
-               (if known-dest? "installed" "downloaded")
-               font-dest))))
+      (if (or (not (file-exists-p (concat font-dest "FiraCode-Regular-Symbol.otf"))) force)
+	  (progn
+	    (url-copy-file font-url (expand-file-name (file-name-nondirectory font-url) font-dest) t)
+	    (message "Fonts downloaded, updating font cache... <fc-cache -f -v> ")
+	    (shell-command-to-string (format "fc-cache -f -v")))
+	(message "`fira-code-mode' fonts already configured")))))
 
 (provide 'fira-code-mode)
 ;;; fira-code-mode.el ends here
